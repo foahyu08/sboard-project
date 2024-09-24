@@ -21,12 +21,11 @@ server:
 spring:
     application:
         name: sboard
-        version: 0.0.3
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://15.164.93.254:3306/jboard
-        username: jboard
-        password: "!Q2w3e4r"
+        url: jdbc:mysql://13.124.193.233:3306/jboard
+        username: root
+        password: Blue9608!
     devtools:
         livereload:
             enabled: true
@@ -61,3 +60,6 @@ spring:
         multipart:
             location: uploads/
             max-file-size: 10MB
+
+ext:
+    version: ${ext.version}

@@ -32,7 +32,7 @@ public class ArticleService {
 
         // 저장
         Article savedArticle = articleRepository.save(article);
-        
+
         // 저장된 글번호 리턴
         return savedArticle.getNo();
     }
@@ -45,21 +45,26 @@ public class ArticleService {
 
         Pageable pageable = pageRequestDTO.getPageable("no");
 
+        Page<Tuple> pageArticle = null;
 
-        // 엔티티 조회
-        //List<Article> articles = articleRepository.findAll();
-        Page<Tuple> pageArticle = articleRepository.selectArticleAllForList(pageRequestDTO, pageable);
+        if(pageRequestDTO.getKeyword() == null) {
+            // 일반 글목록 조회
+            pageArticle = articleRepository.selectArticleAllForList(pageRequestDTO, pageable);
+        }else {
+            // 검색 글목록 조회
+            pageArticle = articleRepository.selectArticleForSearch(pageRequestDTO, pageable);
+        }
 
         // 엔티티 리스트를 DTO 리스트 변환
         List<ArticleDTO> articleList = pageArticle.getContent().stream().map(tuple -> {
 
-                    Article article = tuple.get(0, Article.class);
-                    String nick = tuple.get(1, String.class);
-                    article.setNick(nick);
+            Article article = tuple.get(0, Article.class);
+            String nick = tuple.get(1, String.class);
+            article.setNick(nick);
 
-                    return modelMapper.map(article, ArticleDTO.class);
+            return modelMapper.map(article, ArticleDTO.class);
 
-                }).toList();
+        }).toList();
 
         int total = (int) pageArticle.getTotalElements();
 
