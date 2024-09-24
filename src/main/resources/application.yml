@@ -25,7 +25,7 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://13.124.193.233:3306/jboard
         username: root
-        password: Blue9608!
+        password: "Blue9608!"
     devtools:
         livereload:
             enabled: true
